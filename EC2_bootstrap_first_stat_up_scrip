@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# This script is used as user data for AWS EC2 instances at first start-up.
+# It installs and configures Apache HTTP server with detailed explanations and industry best practices.
+
+# Update the system to ensure all packages are up to date.
+yum update -y
+
+# Install Apache HTTP server.
+yum install -y httpd
+
+# Start the Apache HTTP server.
+systemctl start httpd
+
+# Enable the Apache HTTP server to start on boot.
+systemctl enable httpd
+
+# Create a simple index.html file with a greeting message.
+echo "<h1>Hello World from $(hostname -f)</h1>" > /var/www/html/index.html
+
+# Summary of actions:
+# 1. The script updates the system to ensure it has the latest security patches and updates.
+# 2. It installs the Apache HTTP server, a widely used and well-supported web server.
+# 3. The Apache HTTP server is started to make it available for incoming connections.
+# 4. The Apache HTTP server is configured to start automatically on system boot.
+# 5. Finally, a basic index.html file is created in the web server's root directory, displaying a greeting message with the instance's hostname.
+
+# Industry best practices applied:
+# - Regular system updates help protect against vulnerabilities and ensure system stability.
+# - Using a package manager (yum) to install software ensures that dependencies are resolved and packages are installed securely.
+# - Starting and enabling services (such as httpd) through systemctl ensures proper management and control of services.
+# - Providing a custom greeting message (index.html) gives a basic demonstration of web server functionality and can be expanded upon as needed.
+# - Comments throughout the script explain each step for better understanding and maintainability.
