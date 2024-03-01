@@ -1,10 +1,17 @@
 import boto3
 
-# Create an IAM client
-iam = boto3.client('iam')
+def create_iam_user(username, policy_arn):
+    iam = boto3.client('iam')
+    
+    # Create IAM user
+    iam.create_user(UserName=username)
+    
+    # Attach policy to user
+    iam.attach_user_policy(UserName=username, PolicyArn=policy_arn)
+    
+    print(f"IAM user '{username}' created successfully.")
 
-# Specify IAM user name
-user_name = 'your_user_name'
-
-# Create IAM user
-iam.create_user(UserName=user_name)
+if __name__ == "__main__":
+    username = 'my-user'
+    policy_arn = 'arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess'
+    create_iam_user(username, policy_arn)
